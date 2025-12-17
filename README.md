@@ -1,2 +1,2 @@
-# Curso_MYSQL_Developer_Expert_-Andr-Rosa-
-Curso_MYSQL_Developer_Expert_(AndréRosa)
+# Curso_MYSQL_Developer_Expert_Andre_Rosa
+Curso_MYSQL_Developer_Expert_Andre_Rosa
