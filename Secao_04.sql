@@ -103,9 +103,34 @@ where regiao is null;
 
 
 -- Operador having:
-select Estado, 
-	   count(*) as Municípios
+select cod_uf, 
+	   estado, 
+	   count(*) as 'qtd Mun.'
 from senso
 where ano = '2014'
-group by estado
-having count(cod_mun) > 500;
+group by cod_uf, estado having count(cod_mun) > 500;
+
+select cod_uf, 
+	   estado, 
+       count(*) as 'qtd_mun'
+from senso
+where ano = '2014'
+group by cod_uf, estado having count(cod_mun) < 500;
+
+select cod_uf,
+	   estado,
+	   count(cod_mun) as 'Municípios',
+       sum(populacao) as 'População'
+from senso
+where ano = 2014
+group by cod_uf, estado 
+having sum(populacao) > 5000000;
+
+select cod_uf,
+	   estado,
+       count(cod_mun) as 'Municípios',
+       sum(populacao) as 'População'
+from senso
+where ano = '2014'
+group by cod_uf, estado
+having sum(populacao) < 5000000;
