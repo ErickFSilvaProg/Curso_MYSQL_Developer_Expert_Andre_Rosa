@@ -10,12 +10,22 @@
 */
 
 
+show databases;
+show tables;
+
+desc curso.funcionario;
+desc curso.funcionarios;
+desc curso.senso;
+
+select * from curso.senso;
+
+use curso;
+
+
 /* Comandos DDL: São usadas para definir a estrutura de um banco de dados ou esquema. */
 
 -- CREATE:
-show tables;
-
-create table funcionario(
+create table curso.funcionario(
 	matricula int not null auto_increment,
     nome varchar(50) not null,
     sobrenome varchar(50) not null,
@@ -26,30 +36,98 @@ create table funcionario(
     primary key(matricula)
 );
 
-create table salario(
+create table curso.salario(
 	matricula int not null,
     salario decimal(10,2) not null,
     foreign key(matricula) references funcionario(matricula)
 );
 
-create table audit_salario (
+create table curso.audit_salario (
 	transacao int primary key auto_increment,
     matricula int not null,
     data_transacao datetime not null,
     sal_antigo decimal(10,2),
     sal_novo decimal(10,2),
     usuario varchar(20) not null,
-    foreign key(matricula) references funcionario(matricula)
+    foreign key(matricula) references curso.funcionario(matricula)
 );
 
-create index ix_func1 on funcionario(data_nasc);
-create index ix_func2 on funcionario(cidade,pais);
+create index ix_func1 
+on curso.funcionario(data_nasc);
+create index ix_func2 
+on curso.funcionario(cidade,pais);
+
+create index ix_func1 
+on curso.funcionarios(nome);
+
+create index ix_func2 
+on curso.funcionarios(setor);
+
+
+create database teste;
+
+create view v_funcionarios 
+as select * from funcionarios;
+
+delimiter $$
+create procedure proc_quadrado(inout numero int)
+begin
+    set numero = numero * numero;
+end
+delimiter ;
+
+    set @valor = 5;
+    call proc_quadrado(@valor);
+    select @valor;
 
 
 -- ALTER:
+alter table curso.funcionario
+add genero char(1)
+after sobrenome;
+
+alter table curso.funcionario
+change genero sexo char(1) not null;
+
+
+    -- RENAME:
+    rename table curso.funcionario
+    to curso.pessoa;
+
+    rename table curso.pessoa
+    to curso.funcionario;
+
+
+alter table curso.senso
+add id int;
+
+alter table curso.senso
+modify column id int auto_increment primary key;
+
+alter table curso.funcionario
+modify column endereco varchar(30);
+
+alter table curso.funcionario
+drop column sexo;
+
+alter view v_funcionarios
+as select id, nome from funcionarios;
 
 
 -- DROP:
+drop database teste;
+
+drop table curso.salario;
+
+drop view curso.v_funcionarios;
+
+drop index ix_func1
+on curso.funcionario;
+
+drop index ix_func2
+on curso.funcionario;
+
+drop procedure proc_quadrado;
 
 
 -- TRUNCATE:
