@@ -42,7 +42,7 @@ create table curso.salario(
     foreign key(matricula) references funcionario(matricula)
 );
 
-create table curso.audit_salario (
+create table curso.audit_salario(
 	transacao int primary key auto_increment,
     matricula int not null,
     data_transacao datetime not null,
@@ -51,6 +51,41 @@ create table curso.audit_salario (
     usuario varchar(20) not null,
     foreign key(matricula) references curso.funcionario(matricula)
 );
+
+create table endereco(
+    matricula int not null,
+    rua varchar(40) not null,
+    numero varchar(6) not null,
+    bairro varchar(40) not null,
+    cidade varchar(30) not null,
+    estado varchar(30) not null,
+    pais varchar(30) not null,
+    foreign key(matricula) references funcionario(matricula)
+);
+
+create temporary table tmp_funcionarios(
+    id int,
+    nome varchar(50),
+    salario decimal(10,2),
+    setor varchar(30)
+);
+
+    insert into curso.tmp_funcionarios
+    select * from curso.funcionarios;
+
+    select * from tmp_funcionarios;
+    select * from funcionarios;
+
+    alter table funcionarios
+    change id id int unsigned not null;
+
+    insert into funcionarios
+    select * from tmp_funcionarios;
+
+    alter table funcionarios
+    modify column id int auto_increment;
+
+    insert into funcionarios(nome,salario) values('Leopoldo',1000);
 
 create index ix_func1 
 on curso.funcionario(data_nasc);
@@ -89,15 +124,6 @@ after sobrenome;
 alter table curso.funcionario
 change genero sexo char(1) not null;
 
-
-    -- RENAME:
-    rename table curso.funcionario
-    to curso.pessoa;
-
-    rename table curso.pessoa
-    to curso.funcionario;
-
-
 alter table curso.senso
 add id int;
 
@@ -114,10 +140,20 @@ alter view v_funcionarios
 as select id, nome from funcionarios;
 
 
+-- RENAME:
+rename table curso.funcionario
+to curso.pessoa;
+
+rename table curso.pessoa
+to curso.funcionario;
+
+
 -- DROP:
 drop database teste;
 
 drop table curso.salario;
+
+drop table curso.endereco;
 
 drop view curso.v_funcionarios;
 
@@ -129,5 +165,14 @@ on curso.funcionario;
 
 drop procedure proc_quadrado;
 
+drop function curso.func_salario;
+
+drop trigger curso.trig_func_salario;
+
 
 -- TRUNCATE:
+truncate curso.endereco;
+
+truncate curso.funcionarios;
+
+    select * from funcionarios;
