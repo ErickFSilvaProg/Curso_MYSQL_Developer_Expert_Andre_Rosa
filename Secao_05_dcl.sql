@@ -8,7 +8,7 @@
 */
 
 
-/* Comandos DCL:  */
+/* Comandos DCL: São usadas para definir acesso/controle dos dados/objetos. */
 
 -- GRANT:
 
