@@ -25,15 +25,28 @@ create user 'aluno'@'localhost' identified by 'aluno123';
 
 -- GRANT:
 grant select on curso.funcionarios to 'aluno'@'localhost';
+grant select(nome,setor) on curso.funcionarios to 'aluno'@'localhost';
+
 grant update on curso.funcionarios to 'aluno'@'localhost';
 grant update on *.* to 'aluno'@'localhost';
+
 grant delete on curso.funcionarios to 'aluno'@'localhost';
 grant delete on *.* to 'aluno'@'localhost';
+
 grant insert on curso.funcionarios to 'aluno'@'localhost';
+
+grant create routine on teste.* to 'aluno'@'localhost';
+grant alter routine on teste.* to 'aluno'@'localhost';
+grant execute on procedure teste.proc_quadrado to 'aluno'@'localhost';
+
+grant all privileges on funcionarios to 'aluno'@'localhost';
+grant all privileges on *.* to 'aluno'@'localhost';
+
+flush privileges;
 
 
 -- REVOKE:
-
+revoke select on curso.funcionarios to 'aluno'@'localhost';
 
 
 /* Comandos para testar as permições do usuário: */
@@ -57,3 +70,5 @@ use curso;
     SELECT CONCAT('SHOW GRANTS FOR \'', user, '\'@\'', host, '\';') FROM mysql.user WHERE user = 'aluno';
 
 */
+
+select * from mysql.user where user = 'aluno';

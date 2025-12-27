@@ -101,6 +101,10 @@ on curso.funcionarios(setor);
 
 create database teste;
 
+create table teste.tabela_teste(
+    id int primary key auto_increment
+);
+
 create view v_funcionarios 
 as select * from funcionarios;
 
@@ -108,7 +112,7 @@ delimiter $$
 create procedure proc_quadrado(inout numero int)
 begin
     set numero = numero * numero;
-end
+end $$
 delimiter ;
 
     set @valor = 5;
