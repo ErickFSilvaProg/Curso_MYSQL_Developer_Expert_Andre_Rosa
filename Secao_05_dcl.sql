@@ -25,6 +25,11 @@ create user 'aluno'@'localhost' identified by 'aluno123';
 
 -- GRANT:
 grant select on curso.funcionarios to 'aluno'@'localhost';
+grant update on curso.funcionarios to 'aluno'@'localhost';
+grant update on *.* to 'aluno'@'localhost';
+grant delete on curso.funcionarios to 'aluno'@'localhost';
+grant delete on *.* to 'aluno'@'localhost';
+grant insert on curso.funcionarios to 'aluno'@'localhost';
 
 
 -- REVOKE:
@@ -37,4 +42,18 @@ mysql -u aluno -p
 select user();
 select current_user();
 
-select * from funcionarios;
+use curso;
+
+-- Passos para verificar permissões:
+/* 
+
+1. Para um usuário específico (ex: aluno em localhost):
+    SHOW GRANTS FOR 'aluno'@'localhost';
+
+2. Para ver as permissões do usuário atual:
+    SHOW GRANTS;
+
+3. Para ver permissões de um usuário em qualquer host:
+    SELECT CONCAT('SHOW GRANTS FOR \'', user, '\'@\'', host, '\';') FROM mysql.user WHERE user = 'aluno';
+
+*/
